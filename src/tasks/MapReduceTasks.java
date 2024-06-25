@@ -11,13 +11,9 @@ import java.util.Collections;
  */
 public class MapReduceTasks {
 
-    private static final String DIRFILE1 = "src/weblog.txt";
-    private static final String DIRFILE2 = "src/JCMB_last31days.csv";
-    private static final String DIRFILE3 = "src/happiness.txt";
-
-    public static void executeTask1(String outputFile, int nodes) {
+    public static void executeTask1(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE1);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -36,9 +32,9 @@ public class MapReduceTasks {
         tarea.run();
     }
 
-    public static void executeTask2(String outputFile, int nodes) {
+    public static void executeTask2(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE1);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -57,9 +53,9 @@ public class MapReduceTasks {
         tarea.run();
     }
 
-    public static void executeTask3(String outputFile, int nodes) {
+    public static void executeTask3(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE1);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -80,9 +76,9 @@ public class MapReduceTasks {
         tarea.run();
     }
 
-    public static void executeTask4(String outputFile, int nodes) {
+    public static void executeTask4(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, String, String> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE2);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -106,9 +102,9 @@ public class MapReduceTasks {
         tarea.run();
     }
 
-    public static void executeTask5(String outputFile, int nodes) {
+    public static void executeTask5(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, String, String> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE2);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -134,9 +130,9 @@ public class MapReduceTasks {
         tarea.run();
     }
 
-    public static void executeTask6(String outputFile, int nodes) {
+    public static void executeTask6(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, Double, String> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE2);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -155,7 +151,6 @@ public class MapReduceTasks {
             return Collections.emptyList();
         });
         tarea.setReduceFunction((key, values) -> {
-            
 
             if (key.equals("min")) {
                 Double min = Double.MAX_VALUE;
@@ -178,9 +173,9 @@ public class MapReduceTasks {
         tarea.run();
     }
 
-    public static void executeTask7(String outputFile, int nodes) {
+    public static void executeTask7(String inputFile, String outputFile, int nodes) {
         Tarea<String, String, String, String, String> tarea = new Tarea<>();
-        tarea.setInputFile(DIRFILE3);
+        tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
         tarea.setMapFunction((key, value) -> {
@@ -199,7 +194,7 @@ public class MapReduceTasks {
             return Collections.emptyList();
         });
         tarea.setReduceFunction((key, values) -> {
-            return String.join(", ", values);
+            return String.join(",", values);
         });
         tarea.run();
     }
