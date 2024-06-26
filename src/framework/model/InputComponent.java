@@ -7,16 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Clase que maneja la lectura de datos de entrada desde un archivo.
  *
- * @author JuanJoo
+ * @author Grupo # 6
  */
 public class InputComponent {
+
     private String inputFile;
 
     public InputComponent(String inputFile) {
         this.inputFile = inputFile;
     }
 
+    //Lee el contenido del archivo de entrada y lo convierte en una lista de pares clave-valor.
     public List<Pair<String, String>> readInput() {
         List<Pair<String, String>> input = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
@@ -25,7 +28,6 @@ public class InputComponent {
             while ((line = br.readLine()) != null) {
                 // Usamos el número de línea como clave y la línea completa como valor
                 input.add(new Pair<>(String.valueOf(lineNumber), line));
-                //System.out.println(line);
                 lineNumber++;
             }
         } catch (IOException e) {

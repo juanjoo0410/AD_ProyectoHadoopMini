@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Clase que coordina y ejecuta una tarea completa de MapReduce.
  *
- * @author JuanJoo
+ * @author Grupo # 6
  */
 public class Tarea<K1, V1, K2, V2, V3> {
 
@@ -43,8 +44,9 @@ public class Tarea<K1, V1, K2, V2, V3> {
         this.combinerFunction = combinerFunction;
     }
 
+    // Ejecuta la tarea MapReduce completa.
     public void run() {
-        // Implementar la lógica de ejecución de la tarea MapReduce
+        // Lectura de datos de entrada
         InputComponent input = new InputComponent(inputFile);
         List<Pair<String, String>> inputData = input.readInput();
 

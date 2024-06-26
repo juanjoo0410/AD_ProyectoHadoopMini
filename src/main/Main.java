@@ -1,14 +1,10 @@
 package main;
 
-import framework.model.Pair;
-import framework.model.Tarea;
 import gui.frmMain;
-import java.util.Collections;
-import tasks.MapReduceTasks;
 
 /**
  *
- * @author JuanJoo
+ * @author Grupo # 6
  */
 public class Main {
 
@@ -17,6 +13,5 @@ public class Main {
         frm.setTitle("Hadoop Mini");
         frm.setLocationRelativeTo(null);
         frm.setVisible(true);
-//        MapReduceTasks.executeTask1("result_task_1.txt", 5);
     }
 }

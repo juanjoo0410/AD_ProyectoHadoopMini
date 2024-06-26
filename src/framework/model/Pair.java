@@ -1,10 +1,13 @@
 package framework.model;
 
 /**
+ * La clase Pair representa un par clave-valor genérico. Es útil para almacenar
+ * y manejar datos que vienen en pares.
  *
- * @author JuanJoo
+ * @author Grupo # 6
  */
 public class Pair<K, V> {
+
     private K key;
     private V value;
 

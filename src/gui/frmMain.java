@@ -13,10 +13,11 @@ import tasks.MapReduceTasks;
  * @author JuanJoo
  */
 public class frmMain extends javax.swing.JFrame {
-    
+    // Constantes para las rutas de los archivos de entrada
     private static final String DIRFILE1 = "src/weblog.txt";
     private static final String DIRFILE2 = "src/JCMB_last31days.csv";
     private static final String DIRFILE3 = "src/happiness.txt";
+    // Constantes para la interfaz de usuario
     private final String SELECT_PROMPT = "Seleccione...";
     private final String[] TASKS = {SELECT_PROMPT,
         "Task 1: 404 Requests",
@@ -37,6 +38,7 @@ public class frmMain extends javax.swing.JFrame {
         fillComboBoxes();
     }
     
+    // Método para llenar el combobox de tareas
     private void fillComboBoxes() {
         // Limpiar y llenar cmbInputFiles
         cmbTasks.removeAllItems();
@@ -45,6 +47,7 @@ public class frmMain extends javax.swing.JFrame {
         }
     }
     
+    // Método para seleccionar el directorio de salida
     private void findDirOutputFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -66,6 +69,7 @@ public class frmMain extends javax.swing.JFrame {
         }
     }
     
+    // Método para validar que todos los campos necesarios estén llenos
     private boolean isEmpty() { //Valida si los campos estan vacios
         boolean estado = false;
         if (SELECT_PROMPT.equals(cmbTasks.getSelectedItem().toString())) {
@@ -84,6 +88,7 @@ public class frmMain extends javax.swing.JFrame {
         return estado;
     }
     
+    // Método para limpiar los campos de la interfaz
     private void clear() {
         fillComboBoxes();
         numNodes.setValue(0);
@@ -91,6 +96,7 @@ public class frmMain extends javax.swing.JFrame {
         txtOutputFile.setText("");
     }
     
+    // Método para ejecutar la tarea seleccionada
     private void executeTask(int index) throws IOException {
         String inputFile = txtInputFile.getText();
         String outputFile = txtOutputFile.getText();
