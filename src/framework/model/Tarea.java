@@ -3,6 +3,7 @@ package framework.model;
 import framework.interfaces.CombinerFunction;
 import framework.interfaces.MapFunction;
 import framework.interfaces.ReduceFunction;
+import gui.frmMain;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class Tarea<K1, V1, K2, V2, V3> {
     private MapFunction<K1, V1, K2, V2> mapFunction;
     private ReduceFunction<K2, V2, V3> reduceFunction;
     private CombinerFunction<K2, V2> combinerFunction;
+    private frmMain gui;
+
+    public Tarea(frmMain gui) {
+        this.gui = gui;
+    }
 
     public void setInputFile(String inputFile) {
         this.inputFile = inputFile;
@@ -111,9 +117,11 @@ public class Tarea<K1, V1, K2, V2, V3> {
         output.writeOutput(finalOutput);
 
         // Mostrar resultados
-        System.out.println("Resultados de la tarea MapReduce:");
+        gui.appendText(gui.getNameTaks());
+        gui.appendText("Resultados de la tarea MapReduce:");
         for (Pair<K2, V3> pair : finalOutput) {
-            System.out.println(pair.getKey() + ": " + pair.getValue());
+            String result = pair.getKey() + ": " + pair.getValue();
+            gui.appendText(result);
         }
     }
 }

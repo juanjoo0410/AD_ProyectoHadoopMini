@@ -3,6 +3,8 @@ package framework.model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,12 @@ public class InputComponent {
     //Lee el contenido del archivo de entrada y lo convierte en una lista de pares clave-valor.
     public List<Pair<String, String>> readInput() {
         List<Pair<String, String>> input = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
+        InputStream inputStream = getClass().getResourceAsStream(inputFile);
+        if (inputStream == null) {
+            System.err.println("Archivo no encontrado: " + inputFile);
+            return input;
+        }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             int lineNumber = 0;
             while ((line = br.readLine()) != null) {

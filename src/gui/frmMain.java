@@ -13,10 +13,11 @@ import tasks.MapReduceTasks;
  * @author JuanJoo
  */
 public class frmMain extends javax.swing.JFrame {
+
     // Constantes para las rutas de los archivos de entrada
-    private static final String DIRFILE1 = "src/weblog.txt";
-    private static final String DIRFILE2 = "src/JCMB_last31days.csv";
-    private static final String DIRFILE3 = "src/happiness.txt";
+    private static final String DIRFILE1 = "/weblog.txt";
+    private static final String DIRFILE2 = "/JCMB_last31days.csv";
+    private static final String DIRFILE3 = "/happiness.txt";
     // Constantes para la interfaz de usuario
     private final String SELECT_PROMPT = "Seleccione...";
     private final String[] TASKS = {SELECT_PROMPT,
@@ -27,7 +28,8 @@ public class frmMain extends javax.swing.JFrame {
         "Task 5: Rainfall Filter",
         "Task 6: Min/Max Temperature",
         "Task 7: Sad Words"};
-    
+    private String nameTaks;
+
     ;
 
     /**
@@ -37,7 +39,7 @@ public class frmMain extends javax.swing.JFrame {
         initComponents();
         fillComboBoxes();
     }
-    
+
     // Método para llenar el combobox de tareas
     private void fillComboBoxes() {
         // Limpiar y llenar cmbInputFiles
@@ -46,29 +48,29 @@ public class frmMain extends javax.swing.JFrame {
             cmbTasks.addItem(task);
         }
     }
-    
+
     // Método para seleccionar el directorio de salida
     private void findDirOutputFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setDialogTitle("Seleccionar Directorio");
-        
+
         int result = fileChooser.showOpenDialog(frmMain.this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile != null) {
                 int taskNum = cmbTasks.getSelectedIndex();
-                
+
                 String fileName = "Result_Task_" + taskNum + ".txt";
                 String outputPath = selectedFile.getAbsolutePath() + File.separator + fileName;
-                
+
                 txtOutputFile.setText(outputPath);
             } else {
                 txtOutputFile.setText("");
             }
         }
     }
-    
+
     // Método para validar que todos los campos necesarios estén llenos
     private boolean isEmpty() { //Valida si los campos estan vacios
         boolean estado = false;
@@ -87,7 +89,7 @@ public class frmMain extends javax.swing.JFrame {
         }
         return estado;
     }
-    
+
     // Método para limpiar los campos de la interfaz
     private void clear() {
         fillComboBoxes();
@@ -95,23 +97,41 @@ public class frmMain extends javax.swing.JFrame {
         txtInputFile.setText("");
         txtOutputFile.setText("");
     }
-    
+
     // Método para ejecutar la tarea seleccionada
     private void executeTask(int index) throws IOException {
         String inputFile = txtInputFile.getText();
         String outputFile = txtOutputFile.getText();
         int nNodes = Integer.parseInt(numNodes.getValue().toString());
         switch (index) {
-            case 1 -> MapReduceTasks.executeTask1(inputFile, outputFile, nNodes);
-            case 2 -> MapReduceTasks.executeTask2(inputFile, outputFile, nNodes);
-            case 3 -> MapReduceTasks.executeTask3(inputFile, outputFile, nNodes);
-            case 4 -> MapReduceTasks.executeTask4(inputFile, outputFile, nNodes);
-            case 5 -> MapReduceTasks.executeTask5(inputFile, outputFile, nNodes);
-            case 6 -> MapReduceTasks.executeTask6(inputFile, outputFile, nNodes);
-            case 7 -> MapReduceTasks.executeTask7(inputFile, outputFile, nNodes);
-            default -> throw new AssertionError();
+            case 1 ->
+                MapReduceTasks.executeTask1(inputFile, outputFile, nNodes, this);
+            case 2 ->
+                MapReduceTasks.executeTask2(inputFile, outputFile, nNodes, this);
+            case 3 ->
+                MapReduceTasks.executeTask3(inputFile, outputFile, nNodes, this);
+            case 4 ->
+                MapReduceTasks.executeTask4(inputFile, outputFile, nNodes, this);
+            case 5 ->
+                MapReduceTasks.executeTask5(inputFile, outputFile, nNodes, this);
+            case 6 ->
+                MapReduceTasks.executeTask6(inputFile, outputFile, nNodes, this);
+            case 7 ->
+                MapReduceTasks.executeTask7(inputFile, outputFile, nNodes, this);
+            default ->
+                throw new AssertionError();
         }
     }
+
+    // Mostrar resultados de las tareas
+    public void appendText(String text) {
+        txtLog.append(text + "\n");
+    }
+
+    public String getNameTaks() {
+        return nameTaks;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -137,6 +157,10 @@ public class frmMain extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
         btnRun = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtLog = new javax.swing.JTextArea();
+        btnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -256,6 +280,43 @@ public class frmMain extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("By GRUPO # 6");
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Mostrar Resultados"));
+
+        txtLog.setColumns(20);
+        txtLog.setRows(5);
+        txtLog.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        txtLog.setEnabled(false);
+        jScrollPane1.setViewportView(txtLog);
+
+        btnClear.setText("Limpiar");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnClear)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClear)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -263,19 +324,16 @@ public class frmMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRun)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExit)
-                        .addGap(8, 8, 8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addComponent(btnExit))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,12 +342,15 @@ public class frmMain extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnExit)
-                    .addComponent(btnRun)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnExit)
+                        .addComponent(btnRun))
                     .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
@@ -298,6 +359,7 @@ public class frmMain extends javax.swing.JFrame {
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         try {
             if (!isEmpty()) {
+                nameTaks = cmbTasks.getSelectedItem().toString();
                 executeTask(cmbTasks.getSelectedIndex());
                 JOptionPane.showMessageDialog(this, "Tarea ejecutada exitosamente.",
                         "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -323,17 +385,26 @@ public class frmMain extends javax.swing.JFrame {
 
     private void cmbTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTasksActionPerformed
         switch (cmbTasks.getSelectedIndex()) {
-            case 0 -> txtInputFile.setText("");
-            case 1, 2, 3 -> txtInputFile.setText(DIRFILE1);
-            case 4, 5, 6 -> txtInputFile.setText(DIRFILE2);
-            case 7 -> txtInputFile.setText(DIRFILE3);
+            case 0 ->
+                txtInputFile.setText("");
+            case 1, 2, 3 ->
+                txtInputFile.setText(DIRFILE1);
+            case 4, 5, 6 ->
+                txtInputFile.setText(DIRFILE2);
+            case 7 ->
+                txtInputFile.setText(DIRFILE3);
             default -> {
             }
         }
         txtOutputFile.setText("");
     }//GEN-LAST:event_cmbTasksActionPerformed
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtLog.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnFindDir;
     private javax.swing.JButton btnRun;
@@ -344,10 +415,13 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner numNodes;
     private javax.swing.JTextField txtInputFile;
+    private javax.swing.JTextArea txtLog;
     private javax.swing.JTextField txtOutputFile;
     // End of variables declaration//GEN-END:variables
 }

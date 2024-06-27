@@ -2,6 +2,7 @@ package tasks;
 
 import framework.model.Pair;
 import framework.model.Tarea;
+import gui.frmMain;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -13,10 +14,10 @@ import java.util.Collections;
  * @author Grupo # 6
  */
 public class MapReduceTasks {
-//Tarea 1: Contar el número de respuestas HTTP 404.
 
-    public static void executeTask1(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>();
+    //Tarea 1: Contar el número de respuestas HTTP 404.
+    public static void executeTask1(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
@@ -37,8 +38,8 @@ public class MapReduceTasks {
     }
 
     //Tarea 2: Contar el número de solicitudes de archivos GIF.
-    public static void executeTask2(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>();
+    public static void executeTask2(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
@@ -59,8 +60,8 @@ public class MapReduceTasks {
     }
 
     //Tarea 3: Contar el número de solicitudes por hora.
-    public static void executeTask3(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>();
+    public static void executeTask3(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, Integer, Integer> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
@@ -83,8 +84,8 @@ public class MapReduceTasks {
     }
 
     //Tarea 4: Encontrar registros donde la temperatura superficial y la sensación térmica son diferentes.
-    public static void executeTask4(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, String, String> tarea = new Tarea<>();
+    public static void executeTask4(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, String, String> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
@@ -110,8 +111,8 @@ public class MapReduceTasks {
     }
 
     //Tarea 5: Encontrar registros con lluvia y mostrar la cantidad de lluvia, humedad y sensación térmica.
-    public static void executeTask5(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, String, String> tarea = new Tarea<>();
+    public static void executeTask5(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, String, String> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
@@ -139,8 +140,8 @@ public class MapReduceTasks {
     }
 
     //Tarea 6: Encontrar la temperatura mínima y máxima.
-    public static void executeTask6(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, Double, String> tarea = new Tarea<>();
+    public static void executeTask6(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, Double, String> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
@@ -183,8 +184,8 @@ public class MapReduceTasks {
     }
 
     //Tarea 7: Encontrar estados "tristes" (promedio de felicidad < 2) con ranking de Twitter.
-    public static void executeTask7(String inputFile, String outputFile, int nodes) {
-        Tarea<String, String, String, String, String> tarea = new Tarea<>();
+    public static void executeTask7(String inputFile, String outputFile, int nodes, frmMain gui) {
+        Tarea<String, String, String, String, String> tarea = new Tarea<>(gui);
         tarea.setInputFile(inputFile);
         tarea.setOutputFile(outputFile);
         tarea.setNodes(nodes);
