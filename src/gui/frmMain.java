@@ -78,8 +78,8 @@ public class frmMain extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Seleccione la tarea a ejecutar.",
                     "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             estado = true;
-        } else if (Integer.parseInt(numNodes.getValue().toString()) == 0) {
-            JOptionPane.showMessageDialog(this, "Especifique el número de nodos.",
+        } else if (Integer.parseInt(numNodes.getValue().toString()) <= 0) {
+            JOptionPane.showMessageDialog(this, "La especificación de nodos debe ser mayor a 0.",
                     "Campos incompletos", JOptionPane.WARNING_MESSAGE);
             estado = true;
         } else if ("".equals(txtOutputFile.getText())) {
