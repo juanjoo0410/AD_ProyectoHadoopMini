@@ -21,6 +21,7 @@ public class Tarea<K1, V1, K2, V2, V3> {
     private ReduceFunction<K2, V2, V3> reduceFunction;
     private CombinerFunction<K2, V2> combinerFunction;
     private frmMain gui;
+    private String nodoTask;
 
     public Tarea(frmMain gui) {
         this.gui = gui;
@@ -64,7 +65,10 @@ public class Tarea<K1, V1, K2, V2, V3> {
 
         for (int i = 0; i < inputData.size(); i++) {
             Pair<String, String> pair = inputData.get(i);
-            mapNodes.get(i % numNodes).map((K1) pair.getKey(), (V1) pair.getValue());
+            MapNode<K1, V1, K2, V2> node = mapNodes.get(i % numNodes);
+            node.map((K1) pair.getKey(), (V1) pair.getValue());
+            nodoTask = "Nodo Map " + (i % numNodes) + ": Clave=" + pair.getKey() + ", Valor=" + pair.getValue();
+            gui.appendText(nodoTask);
         }
 
         // Combinar (si se proporciona una función combinadora)
@@ -103,6 +107,8 @@ public class Tarea<K1, V1, K2, V2, V3> {
             List<Pair<K2, List<V2>>> sortedPartition = sorter.sort(partitions.get(i));
             for (Pair<K2, List<V2>> pair : sortedPartition) {
                 reduceNodes.get(i).reduce(pair.getKey(), pair.getValue());
+                nodoTask = "Nodo Reduce " + i + ": Clave=" + pair.getKey() + ", Valores=" + pair.getValue();
+                gui.appendText(nodoTask);
             }
         }
 

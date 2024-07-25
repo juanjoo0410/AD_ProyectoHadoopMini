@@ -359,6 +359,7 @@ public class frmMain extends javax.swing.JFrame {
     private void btnRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunActionPerformed
         try {
             if (!isEmpty()) {
+                txtLog.setText("");
                 nameTaks = cmbTasks.getSelectedItem().toString();
                 executeTask(cmbTasks.getSelectedIndex());
                 JOptionPane.showMessageDialog(this, "Tarea ejecutada exitosamente.",
